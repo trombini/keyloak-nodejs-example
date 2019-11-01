@@ -1,0 +1,36 @@
+version: '3.3'
+services:
+  keycloak:
+    image: jboss/keycloak:7.0.0
+    container_name: keycloak
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=secret
+      - DB_VENDOR=mariadb
+      - DB_ADDR=keycloak_db
+      - DB_USER=keycloak
+      - DB_PASSWORD=secret
+      - DB_DATABASE=keycloak
+      - KEYCLOAK_LOGLEVEL=DEBUG
+    ports:
+      - 8081:8080
+      - 9990:9990
+      - 8787:8787
+    command: ["-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "--debug", "8787"]
+
+  keycloak_db: # will contain all keycloak configurations and realms
+    image: mariadb:10.3
+    container_name: keycloak_db
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
+    environment:
+      - MYSQL_DATABASE=keycloak
+      - MYSQL_USER=keycloak
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - 3305:3306
+    volumes:
+      - keycloak_db-data:/var/lib/mysql
+
+volumes:
+  keycloak_db-data:

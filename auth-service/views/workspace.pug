@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  div.container
+    div.mx-auto.w-200.p-3
+      h1 Choose Workspace
+      form.form-inline(method="post")
+        input(type="hidden", name="source", value=source)
+        input(type="hidden", name="version", value=version)
+        div.form-group.mb-2
+          span Workspace
+        div.form-group.mx-sm-3.mb-2
+          label.sr-only Workspace
+          input.form-control(type="text", name="workspace", placehlder="Workspace")
+        button.btn.btn-primary.mb-2(type="submit") Signin
