@@ -29,23 +29,28 @@ The endpoints for the service are:
 
 After the user gives his consent, Keycloak will respond with an HTTP 302 and redirects the user to:
 
-```
+```HTTP
 http://localhost:3001/start?auth_callback=1&state=5dfa7b16-4c13-4091-84b6-212011491996&session_state=be25ba26-8445-4086-993d-0b4fed3c0eda&code=044f9831-f3d1-40a8-9c2a-c52728cbdeac.be25ba26-8445-4086-993d-0b4fed3c0eda.96512b98-ea34-4672-81d7-189f73f10ce6
 ```
 
 The Keycloak-Connect Middleware then handles the Oauth process completely autonomous in the background.
 
 **Middleware Request to Keycloak**
-```
+```HTTP
 POST /auth/realms/acme/protocol/openid-connect/token HTTP/1.1
 Host: keycloak:8081
 Content-Type: application/x-www-form-urlencoded
 X-Client: keycloak-nodejs-connect
 
-client_session_state=nmUkXNnOGKhqP2QAjj-a-hmCsHw8Xsk4&client_session_host=&code=044f9831-f3d1-40a8-9c2a-c52728cbdeac.be25ba26-8445-4086-993d-0b4fed3c0eda.96512b98-ea34-4672-81d7-189f73f10ce6&grant_type=authorization_code&client_id=mobile-app&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fstart%3Fauth_callback%3D1
+client_session_state=nmUkXNnOGKhqP2QAjj-a-hmCsHw8Xsk4
+&client_session_host=
+&code=044f9831-f3d1-40a8-9c2a-c52728cbdeac.be25ba26-8445-4086-993d-0b4fed3c0eda.96512b98-ea34-4672-81d7-189f73f10ce6
+&grant_type=authorization_code
+&client_id=mobile-app
+&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fstart%3Fauth_callback%3D1
 ```
 
-```
+```HTTP
 HTTP/1.1 200 OK
 Connection: close
 Cache-Control: no-store
